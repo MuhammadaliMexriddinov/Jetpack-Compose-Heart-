@@ -17,11 +17,12 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import uz.alphadroid.cn.viewmodel.impl.Score2ViewModelImpl
 import uz.alphadroid.cn.viewmodel.impl.YurakViewModelImpl
 
 @SuppressLint("FlowOperatorInvokedInComposition", "CoroutineCreationDuringComposition")
 @Composable
-fun ScoreTest2Screen(mainViewModel: YurakViewModelImpl = viewModel(), onClick: () -> Unit) {
+fun ScoreTest2Screen(mainViewModel: Score2ViewModelImpl = viewModel(), onClick: () -> Unit) {
     var result = remember { mutableStateOf("qiymat berilmadi !") }
     Column(
         modifier = Modifier
@@ -45,19 +46,15 @@ fun ScoreTest2Screen(mainViewModel: YurakViewModelImpl = viewModel(), onClick: (
         val openDialog = remember { mutableStateOf(false) }
         Button(onClick = {
             mainViewModel.sendData(
-                "23",
+                "54",
+                "1",
+                "1",
+                "150",
+                "1",
+                "190",
+                "50",
                 "0",
                 "1",
-                "110",
-                "180",
-                "0",
-                "2",
-                "200",
-                "1",
-                "3",
-                "3",
-                "2",
-                "1"
             )
             openDialog.value = true
         }) {
@@ -66,11 +63,12 @@ fun ScoreTest2Screen(mainViewModel: YurakViewModelImpl = viewModel(), onClick: (
         if (openDialog.value) {
 
             mainViewModel.succesSharedFlow.onEach {
-                if (it == "0") {
-                    result.value = "0"
-                } else if (it == "1") {
-                    result.value = "1"
-                }
+//                if (it.title=="high" && it.number==14) {
+//                    result.value = "high , 14"
+//                } else {
+//                    result.value = "else"
+//                }
+                result.value=it.toString()
             }.launchIn(mainViewModel.viewModelScope)
 
             AlertDialog(
@@ -78,14 +76,15 @@ fun ScoreTest2Screen(mainViewModel: YurakViewModelImpl = viewModel(), onClick: (
                     openDialog.value = false
                 },
                 title = {
-                    Text(text = result.value)
+                    Column(modifier = Modifier.height(200.dp)) {
+                        Text(text = result.value)
+                    }
                 },
                 confirmButton = {
 
                 },
                 dismissButton = {
                     Button(
-
                         onClick = {
                             openDialog.value = false
                         }) {

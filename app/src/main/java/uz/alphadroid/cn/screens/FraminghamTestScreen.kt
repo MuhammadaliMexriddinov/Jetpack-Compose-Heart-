@@ -17,12 +17,13 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import uz.alphadroid.cn.viewmodel.impl.FraminghamViewModelImpl
 import uz.alphadroid.cn.viewmodel.impl.YurakViewModelImpl
 
 
 @SuppressLint("FlowOperatorInvokedInComposition", "CoroutineCreationDuringComposition")
 @Composable
-fun FraminghamTestScreen(mainViewModel: YurakViewModelImpl = viewModel(), onClick: () -> Unit) {
+fun FraminghamTestScreen(mainViewModel: FraminghamViewModelImpl = viewModel(), onClick: () -> Unit) {
     var result = remember { mutableStateOf("qiymat berilmadi !") }
     Column(
         modifier = Modifier
@@ -46,19 +47,13 @@ fun FraminghamTestScreen(mainViewModel: YurakViewModelImpl = viewModel(), onClic
         val openDialog = remember { mutableStateOf(false) }
         Button(onClick = {
             mainViewModel.sendData(
-                "23",
                 "0",
+                "27",
+                "280",
+                "40",
+                "160",
                 "1",
-                "110",
-                "180",
-                "0",
-                "2",
-                "200",
                 "1",
-                "3",
-                "3",
-                "2",
-                "1"
             )
             openDialog.value = true
         }) {
@@ -67,11 +62,7 @@ fun FraminghamTestScreen(mainViewModel: YurakViewModelImpl = viewModel(), onClic
         if (openDialog.value) {
 
             mainViewModel.succesSharedFlow.onEach {
-                if (it == "0") {
-                    result.value = "0"
-                } else if (it == "1") {
-                    result.value = "1"
-                }
+                result.value=it.toString()
             }.launchIn(mainViewModel.viewModelScope)
 
             AlertDialog(
@@ -79,7 +70,9 @@ fun FraminghamTestScreen(mainViewModel: YurakViewModelImpl = viewModel(), onClic
                     openDialog.value = false
                 },
                 title = {
-                    Text(text = result.value)
+                   Column(modifier = Modifier.height(200.dp)) {
+                       Text(text = result.value)
+                   }
                 },
                 confirmButton = {
 
