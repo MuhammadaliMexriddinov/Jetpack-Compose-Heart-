@@ -48,6 +48,7 @@ fun BottomNavGraph(navController: NavHostController) {
             }
         }
 
+
         composable(route = BottomBarScreen.Framingham.route) {
             FraminghamScreen {
                 navController.navigate("framingham_test")

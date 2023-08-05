@@ -5,6 +5,7 @@ import android.widget.ImageButton
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
@@ -23,6 +24,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import uz.alphadroid.cn.screens.items.YurakItem
+import uz.alphadroid.cn.screens.items.YurakkItem
 import uz.alphadroid.cn.utils.Extension
 import uz.alphadroid.cn.viewmodel.impl.YurakViewModelImpl
 
@@ -30,6 +33,7 @@ import uz.alphadroid.cn.viewmodel.impl.YurakViewModelImpl
 @Composable
 fun YurakTestScreen(mainViewModel: YurakViewModelImpl = viewModel(), onClick: () -> Unit) {
     var result = remember { mutableStateOf("qiymat berilmadi !") }
+    var first = remember { mutableStateOf("!") }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -41,18 +45,42 @@ fun YurakTestScreen(mainViewModel: YurakViewModelImpl = viewModel(), onClick: ()
         ) {
             IconButton(onClick = {
                 onClick()
-            } , modifier = Modifier.align(Alignment.CenterStart))
+            }, modifier = Modifier.align(Alignment.CenterStart))
             {
                 Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "back")
             }
 
-            Text(text = "Yurak test ai" , modifier = Modifier.align(Alignment.Center))
+            Text(text = "Yurak test ai", modifier = Modifier.align(Alignment.Center))
+        }
+
+        LazyColumn {
+            item {
+                YurakkItem(textTest = "knjkfjnc") {
+                     first.value=it
+                }
+
+                YurakkItem(textTest = "knjkfjnc") {
+                    first.value=it
+                }
+                YurakkItem(textTest = "knjkfjnc") {
+                    first.value=it
+                }
+                YurakkItem(textTest = "knjkfjnc") {
+                    first.value=it
+                }
+                YurakkItem(textTest = "knjkfjnc") {
+                    first.value=it
+                }
+                YurakkItem(textTest = "knjkfjnc") {
+                    first.value=it
+                }
+            }
         }
 
         val openDialog = remember { mutableStateOf(false) }
         Button(onClick = {
             mainViewModel.sendData(
-                "23",
+                first.value,
                 "0",
                 "1",
                 "110",
